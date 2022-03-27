@@ -15,8 +15,14 @@ function getRandomNumber(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+/**
+ * Utility function to shuffle the items in an array
+ * @param {object} arr
+ */
+function shuffleArray(arr) {
+  return arr.sort(function (a, b) { return Math.random() - 0.5 })
+}
 
-// Create DOM thingy to show answer after button clicked
 function addEquation() {
   let section = document.getElementById('problem')
   let divElement = section.querySelector('.expression.show-hide');
@@ -31,30 +37,49 @@ function addAnswer() {
   }
 }
 
-/**
- * Utility function to shuffle the items in an array
- * @param {object} arr
- */
-function shuffleArray(arr) {
-  return arr.sort(function (a, b) { return Math.random() - 0.5 })
-}
+document.addEventListener('DOMContentLoaded', () => {
+  addAnswer();
+  addEquation();
+  let currentProb = document.querySelector('.currentProblem');
+  let probPlace = parseInt(currentProb.innerText);
+  let currentScore = document.querySelector('.currentScore');
+  let scorePlace = parseInt(currentScore.innerText);
 
-document.addEventListener('DOMContentLoaded', () =>{
-    const button = document.getElementById('answers');
-    button.addEventListener('click', )
+  const buttons = document.querySelectorAll('li');
+  buttons.forEach((answerBtn) => {
+    answerBtn.addEventListener('click', () => {
+      if (probPlace < 10) {
+        probPlace += 1;
+        currentProb.innerText = probPlace;
+      }
+      if (answerBtn.innerText == answer) {
+        scorePlace += 1;
+        currentScore.innerText = scorePlace;
+        console.log('cool')
+      }
+      //   else {
+      //     if (answerBtn.innerText != answer) {
+      //       console.log('You Stupid')
+      //     }
+      //   }
+    });
+  });
+
+  const startOver = document.getElementById('btnStartOver');
+  startOver.addEventListener('click', () => {
+    currentProb.innerText = 0;
+    currentScore.innerText = 0;
+  });
+
 });
 
-function selectAnswer(){
-
-    
+function test() {
+  console.log('test worked');
 }
-// document.addEventListener('DOMContentLoaded', () => {
-//     const button = document.getElementById('btnStartOver')
-//     button.addEventListener('click', );
-//   });
-  
-addAnswer();
-addEquation();
+
+
+  // for(let i = 0; i < testScores.length; i++) {
+  //   sum = sum + testScores[i];  // add each score to the sum
 
 
   // const tasks = document.querySelectorAll('li');
