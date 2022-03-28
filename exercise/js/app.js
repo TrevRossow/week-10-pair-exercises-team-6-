@@ -24,12 +24,19 @@ function shuffleArray(arr) {
 }
 
 function addEquation() {
+  var1 = getRandomNumber(10);
+  var2 = getRandomNumber(10);
+  answer = var1 * var2;
   let section = document.getElementById('problem')
   let divElement = section.querySelector('.expression.show-hide');
   divElement.innerText = var1 + ' * ' + var2;
 }
 
 function addAnswer() {
+  var3 = getRandomNumber(82);
+  var4 = getRandomNumber(82);
+  var5 = getRandomNumber(82);
+  answerArray = [answer, var3, var4, var5];
   let randomArray = shuffleArray(answerArray);
   let li = document.querySelectorAll('li');
   for (let i = 0; i < li.length; i++) {
@@ -37,9 +44,14 @@ function addAnswer() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  addAnswer();
+function nextQuestion(){
   addEquation();
+  addAnswer();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  nextQuestion();
+
   let currentProb = document.querySelector('.currentProblem');
   let probPlace = parseInt(currentProb.innerText);
   let currentScore = document.querySelector('.currentScore');
@@ -48,56 +60,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('li');
   buttons.forEach((answerBtn) => {
     answerBtn.addEventListener('click', () => {
+      if(probPlace == 10){
+        let element = document.querySelector('ul');
+        let section = document.getElementById('problem')
+        let divElement = section.querySelector('.expression.show-hide');
+        let textElement = document.querySelector('.show-hide')
+        element.remove();
+        divElement.remove();
+        textElement.remove();
+      }
       if (probPlace < 10) {
         probPlace += 1;
         currentProb.innerText = probPlace;
       }
-      if (answerBtn.innerText == answer) {
+      if ((answerBtn.innerText == answer) && (scorePlace < 10)) {
         scorePlace += 1;
         currentScore.innerText = scorePlace;
-        console.log('cool')
+       
       }
-      //   else {
-      //     if (answerBtn.innerText != answer) {
-      //       console.log('You Stupid')
-      //     }
-      //   }
+      nextQuestion();
     });
   });
 
   const startOver = document.getElementById('btnStartOver');
   startOver.addEventListener('click', () => {
-    currentProb.innerText = 0;
-    currentScore.innerText = 0;
+    location.reload();
   });
 
 });
-
-function test() {
-  console.log('test worked');
-}
-
-
-  // for(let i = 0; i < testScores.length; i++) {
-  //   sum = sum + testScores[i];  // add each score to the sum
-
-
-  // const tasks = document.querySelectorAll('li');
-
-  // tasks.forEach((task) => {
-  //   // when you click on a task mark it completed
-  //   task.addEventListener('click', () => {
-  //     if (!task.classList.contains('completed')) {
-  //       task.classList.add('completed');
-  //       task.querySelector('i').classList.add('completed');
-  //     }
-  //   });
-
-  //   // when you double click a task remove the completed class
-  //   task.addEventListener('dblclick', () => {
-  //     if (task.classList.contains('completed')) {
-  //       task.classList.remove('completed');
-  //       task.querySelector('i').classList.remove('completed');
-  //     }
-  //   });
-  // });
